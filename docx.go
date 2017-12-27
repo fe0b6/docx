@@ -20,6 +20,10 @@ type ReplaceDocx struct {
 	footers   map[string]string
 }
 
+func (r *ReplaceDocx) Read() string {
+	return r.content
+}
+
 func (r *ReplaceDocx) Editable() *Docx {
 	return &Docx{
 		files:   r.zipReader.File,
@@ -43,7 +47,7 @@ type Docx struct {
 }
 
 func (d *Docx) ReplaceRaw(oldString string, newString string, num int) {
-       d.content = strings.Replace(d.content, oldString, newString, num)
+	d.content = strings.Replace(d.content, oldString, newString, num)
 }
 
 func (d *Docx) Replace(oldString string, newString string, num int) (err error) {
@@ -285,7 +289,6 @@ func streamToByte(stream io.Reader) []byte {
 	buf.ReadFrom(stream)
 	return buf.Bytes()
 }
-
 
 func encode(s string) (string, error) {
 	var b bytes.Buffer
